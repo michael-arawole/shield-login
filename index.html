@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- CSS only -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+    <style type="text/css">
+        .submitted {
+            transition: transform 0.51s ease-out;
+            -webkit-animation: pound 0.51s ease-out;
+            animation: pound 1s;
+            transform-origin: center;
+            -webkit-transform-origin: center;
+            -webkit-animation-fill-mode: forwards;
+        }
+
+        @keyframes pound {
+            from {
+                transform: none;
+            }
+            to {
+                transform: scale(0.1);
+                background: #fff;
+            }
+        }
+
+        @-webkit-keyframes pound {
+            from {
+                transform: none;
+            }
+            to {
+                transform: scale(0.1);
+                background: #fff;
+            }
+        }
+
+        @-webkit-keyframes bounce {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes bounce {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .bounce {
+            -webkit-animation-name: bounce;
+            animation-name: bounce;
+            background: #fff;
+            transform: scale(0.1);
+            -webkit-transform: scale(0.1);
+            transform-origin: center;
+            -webkit-transform-origin: center;
+
+            -webkit-animation-duration: 1.5s;
+            animation-duration: 1.5s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+            animation-iteration-count: infinite;
+            -webkit-animation-iteration-count: infinite;
+        }
+        .grow {
+            transition: transform 1s ease-in;
+            -webkit-animation: grow 1.3s ease-in;
+            animation: grow 1.3s;
+            transform-origin: center;
+            -webkit-transform-origin: center;
+            -webkit-animation-fill-mode: forwards;
+        }
+        @keyframes grow {
+            from {
+                transform: scale(0.1);
+            }
+            to {
+                transform: scale(1);
+                /*background: #eee;*/
+            }
+        }
+        @-webkit-keyframes grow {
+            from {
+                transform: scale(0.1);
+            }
+            to {
+                transform: scale(1);
+                /*background: #eee;*/
+            }
+        }
+
+    </style>
+    <app-container id="app">
+        <!-- <div class="starfield"></div> -->
+        <div class="login-form">
+            <div class="fxt-header">
+                <a href="" class="fxt-logo">
+                    <img src="assets/img/logo-alt.png" alt="Logo">
+                </a>
+            </div>
+            <div>
+                <p>Login into your account</p>
+            </div>
+
+            <form autocomplete="new-password" autocorrect="off" spellcheck="false" id="login-form" >
+                <div class="form-group">
+                    <input autocomplete="new-password" type="text" placeholder="Agent ID" class="form-control" name="agent_id" required="" value="admin" />
+                </div>
+                
+                <div class="form-group">
+                    <input autocomplete="new-password" type="password" placeholder="Password" name="password" class="form-control" required="" value="test" />
+                </div>
+
+                <button class="btn btn-block btn-primary" id="login-status-changer" style="background-color: #131313;border-color: #41a3bb;" type="submit">Login</button>
+            </form>
+
+            <div class="login-success" style="display: none;">
+                <p>Welcome, <span id="agent_title"></span>!</p>
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_zrz4ycwx.json"  background="transparent" speed="0.4"  style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+            </div>
+        </div>
+
+        <footer class="footer" style="">
+            <p>You're entering a secured organization website which may only be used by authorized personnels.<br> All activities on are being monitored</p>
+        </footer>
+    </app-container>
+    <!-- Javascript -->
+    <script src="assets/js/jquery.min.js"></script>
+    <!-- <script src="assets/js/app.js"></script> -->
+    <script src="assets/js/starfield.js"></script>
+
+    <script>
+        function login_callback(data) {
+            $(".login-form * ").fadeOut("fast");
+            $(".login-form").addClass("submitted");
+            $(".login-success").addClass('submitted');
+            setTimeout(function () {
+                $(".login-form * ").css("opacity", "0");
+                $(".login-form").removeClass("submitted");
+                $(".login-form").addClass("bounce");
+            }, 1000);
+
+            $("#agent_title").text('Special Agent Culson');
+            setTimeout(function () {
+                $(".login-form").removeClass("bounce");
+                $(".login-form").css("opacity", "1");
+                $(".login-form").addClass("grow");
+
+                $(".login-success").show();
+                $(".login-success").css("opacity", "1");
+                $(".login-success *").css("opacity", "1");
+                $(".login-success *").show();
+                $(".login-success").addClass('grow');
+            }, 1500);
+        }
+        $("form#login-form").submit(function(e){
+            e.preventDefault();
+            login_callback();
+        })
+    </script>
+</body>
+</html>
